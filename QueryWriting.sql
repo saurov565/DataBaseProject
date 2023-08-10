@@ -1,0 +1,44 @@
+SELECT E ID, E NAME, DOB, JOB TITLE,
+SALARY FROM EMP Info WHERE SALARY¡15000
+
+SELECT IN DATE, OUT DATE,
+ROOM TYPE, ROOM NO, CUS ID FROM Accommodation WHERE CUS ID
+= ’20’
+
+
+SELECT CUS ID, COLUMN VALUE AS Phone No FROM CUS CON, TABLE(CUS CON.Phone No) WHERE CUS ID = ’10’;
+
+
+SELECT AMOUNT, INVOICE NUMBER, PAY DATE FROM
+PAYMENT WHERE AMOUNT = (SELECT MAX(AMOUNT) FROM
+PAYMENT);
+
+SELECT ROUND(AVG(SALARY),2) AS ”AVERAGE SALARY”,
+AGENCY ID FROM EMP Info GROUP BY AGENCY ID
+
+SELECT CUS ID, CUS NAME, EMAIL, NVL(MEMBERSHIP LEVEL,’NO
+MEMBERSHIP’), AGENCY ID FROM CUS INFO WHERE AGENCY ID
+= ( SELECT AGENCY ID FROM AGENCY INFO WHERE AGENCY NAME
+= ’ABC’)
+
+
+SELECT * FROM AIRLINE WHERE CUS ID = (SELECT CUS ID
+FROM CUS INFO WHERE CUS NAME = ’RAISUL’)
+
+
+SELECT C.CUS NAME, T.* FROM CUS Info C, transportation
+T WHERE C.CUS ID = T.CUS ID
+
+
+select info.*, loc.* from Agency Info info, Agency loc loc where
+info.agency id = loc.agency id
+
+
+create view transport as select TRANS NO,PICK LOC, DROP LOC
+from transportation where cus id = ’10’ DESC TRANSPORT
+
+
+create view EMP SAL ( NAME, MINSAL, MAXSAL) as select
+a.agency name, min(e.salary), max(e.salary) from emp info e, agency info
+a where e.agency id = a.agency id group by a.agency name DESC
+EMP SAL
