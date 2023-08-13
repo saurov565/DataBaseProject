@@ -1,115 +1,117 @@
-CREATE TABLE Agency Info(Agency ID varchar2(20) primary key,Agency Name
-varchar2(20) not null, Email varchar2(20) unique) desc Agency Info
+create table Agency_Info(Agency_ID varchar2(20) primary key,Agency_Name varchar2(20) not null,Email varchar2(20) unique)
 
-CREATE Agency Loc(Agency ID varchar2(20) primary key,City varchar2(20)
-not null,Country varchar2(20) not null,Zip code number not null) desc Agency Loc
-
-CREATE TYPE multivalue type AS TABLE OF VARCHAR2(15); CREATE
-TABLE Agency Con ( Agency ID varchar2(20) PRIMARY KEY, Phone No
-multivalue type) NESTED TABLE Phone No STORE AS Phone Numbers Table;
-desc Agency con
-drop table Agency con
+desc Agency_Info
 
 
-CREATE TABLE EMP Info(E ID varchar2(20) primary key,E Name varchar2(20)
-not null,DOB date not null,Job Title varchar2(20) not null,Salary Number(20)
-not null,Agency ID varchar2(20) not null )
-ALTER TABLE EMP Info ADD foreign key (Agency ID) references Agency Info
-(Agency ID)
-desc EMP Info
+  
+create table Agency_Loc(Agency_ID varchar2(20) primary key,City varchar2(20) not null,Country varchar2(20) not null,Zip_code number not null)
 
-CREATE TYPE multivalue type AS TABLE OF VARCHAR2(15);
-CREATE TABLE EMP Skill ( E ID varchar2(20) PRIMARY KEY, skills
-multivalue type) NESTED TABLE skills STORE AS Phone Numbers Table4;
-desc EMP Skill
-
-CREATE TABLE CUS Info(CUS ID varchar2(20) PRIMARY KEY, Cus Name
-varchar2(100) NOT NULL, Email varchar2(100) UNIQUE, Membership Level
-varchar2(20), Agency ID varchar2(20));
-ALTER TABLE CUS Info add constraint agency FOREIGN KEY (Agency ID)
-references Agency Info (Agency ID) ;
-DESC CUS Info;
-
-CREATE TABLE CUS Loc(CUS ID varchar2(20) PRIMARY KEY, country
-varchar2(20) NOT NULL, city varchar2(20) NOT NULL, Zip Code varchar2(20));
-DESC CUS Loc
-
-DESC cus con;
-INSERT INTO cus con(CUS ID, PHONE NO) VALUES ( ’10’, multivalue type(’018********’,
-’019********’)); INSERT INTO cus con(CUS ID, PHONE NO) VALUES (
-’20’, multivalue type(’01811******’, ’01822******’)); INSERT INTO cus con(CUS ID,
-PHONE NO) VALUES ( ’30’, multivalue type(’018123*****’, ’015678*****’,
-’016********’));
-SELECT CUS ID, COLUMN VALUE AS PHONE NO FROM cus con ,
-TABLE(cus con.PHONE NO);
-
-desc Airline
-INSERT INTO Airline( FLIGHT NO, AIRLINE, CUS ID) values(’364’, ’QUTAR’,
-’10’)
-INSERT INTO Airline( FLIGHT NO, AIRLINE, CUS ID) values(’365’, ’QUTAR’,
-’20’)
-INSERT INTO Airline( FLIGHT NO, AIRLINE, CUS ID) values(’367’, ’BIMAN BANGLA’, ’10’)
-delete from airline where flight NO = ’892TL’
-select * from Airline
+desc Agency_Loc 
 
 
-desc Airline Info
-INSERT INTO Airline Info( FLIGHT NO, DEP COUNTRY, ARR COUNTRY,
-DEP TIME, ARR TIME) values(’892TL’,’BANGLADESH’,’USA’,’26-NOV-22’,’28-
-NOV-22’)
-INSERT INTO Airline Info( FLIGHT NO, DEP COUNTRY, ARR COUNTRY,
-DEP TIME, ARR TIME) values(’367FC’,’USA’,’UK’,’03-MAY-22’,’04-MAY-22’)
-select * from Airline Info
+  
+CREATE TYPE multivalue_type AS TABLE OF VARCHAR2(15);
+CREATE TABLE Agency_Con ( Agency_ID varchar2(20) PRIMARY KEY, Phone_No multivalue_type) NESTED TABLE Phone_No STORE AS Phone_Numbers_Table;
 
+desc Agency_con
+
+drop table Agency_con
+
+
+
+create table EMP_Info(E_ID varchar2(20) primary key,E_Name varchar2(20) not null,DOB date not null,Job_Title varchar2(20) not null,Salary Number(20) not null,Agency_ID varchar2(20) not null )
+
+ALTER TABLE EMP_Info ADD foreign key (Agency_ID) references Agency_Info (Agency_ID)
+
+desc EMP_Info
+
+
+CREATE TYPE multivalue_type AS TABLE OF VARCHAR2(15);
+CREATE TABLE EMP_Skill ( E_ID varchar2(20) PRIMARY KEY, skills multivalue_type) NESTED TABLE skills STORE AS Phone_Numbers_Table4;
+
+desc EMP_Skill 
+
+
+
+CREATE TABLE CUS_Info(CUS_ID varchar2(20) PRIMARY KEY, Cus_Name varchar2(100) NOT NULL, Email varchar2(100) UNIQUE, Membership_Level varchar2(20), Agency_ID varchar2(20));
+
+ALTER TABLE CUS_Info add constraint agency FOREIGN KEY (Agency_ID) references Agency_Info (Agency_ID) ;
+
+DESC CUS_Info;
+
+
+
+CREATE TABLE CUS_Loc(CUS_ID varchar2(20) PRIMARY KEY, country varchar2(20) NOT NULL, city varchar2(20) NOT NULL, Zip_Code varchar2(20));
+
+DESC CUS_Loc;
+
+
+
+CREATE TYPE multivalue_type AS TABLE OF VARCHAR2(15);
+CREATE TABLE cus_con ( cus_id varchar(20) PRIMARY KEY, Phone_No multivalue_type) NESTED TABLE Phone_No STORE AS Phone_Numbers_Table1;
+
+desc cus_con
+
+
+
+create table Airline(Flight_No Varchar2(20) primary key,Airline varchar2(20) not null,Cus_ID varchar2(20) not null)
+
+ALTER TABLE Airline ADD foreign key (Cus_Id) references Cus_Info(Cus_Id)
+
+desc Airline;
+
+
+
+create table Airline_Info(Flight_No Varchar2(20) primary key,Dep_Country varchar2(20) not null,Arr_Country varchar2(20) not null,Dep_Time varchar(20) not null,Arr_Time Varchar2(20) not null)
+desc Airline_Info
+
+
+
+CREATE TABLE transportation (Trans_No varchar(20) PRIMARY KEY, Booking_Date date UNIQUE, Pick_Loc varchar(20) NOT NULL, Drop_Loc varchar(20) NOT NULL, Mode_of_Transport varchar(10), CUS_ID varchar2(20))
+
+ALTER TABLE transportation add constraint customers FOREIGN KEY (CUS_ID) references CUS_Info (CUS_ID)
 
 DESC transportation
-INSERT INTO transportation( TRANS NO, BOOKING DATE, PICK LOC,
-DROP LOC, MODE OF TRANSPORT, CUS ID) values(’T245GF’,’21-JUL23’, ’UTTARA’,’KURIL’,’AC CAR’,’10’)
-INSERT INTO transportation( TRANS NO, BOOKING DATE, PICK LOC,
-DROP LOC, MODE OF TRANSPORT, CUS ID) values(’F259OG’,’13-MAY23’, ’AZIMPUR’, ’CUMILLA’,’AC TRAIN’,’20’)
-INSERT INTO transportation( TRANS NO, BOOKING DATE, PICK LOC,
-DROP LOC, MODE OF TRANSPORT, CUS ID) values(’O2T59F’,’01-APR233’,’RAJSHAI’, ’DHAKA’,’AC BUS’,’30’)
-SELECT * FROM transportation
 
 
-DESC Hotel Info
-INSERT INTO Hotel Info (H ID, H NAME, LOCATION, FACILITES, CUS ID)
-values(’63K9’,’GHI’, ’DHAKA’, ’SWIMMING’,’10’)
-INSERT INTO Hotel Info (H ID, H NAME, LOCATION, FACILITES, CUS ID)
-values(’26R0’,’BCD’, ’CUMILLA’, ’PARKING’,’20’)
-INSERT INTO Hotel Info (H ID, H NAME, LOCATION, FACILITES, CUS ID)
-values(’55SK’,’JKL’, ’MYMENSINGH’, ’CONFERENCE’,’30’)
-SELECT * FROM Hotel Info
+
+create table Hotel_Info(H_ID Varchar2(20) primary key,H_Name varchar2(20) not null,Location varchar2(20) not null,Facilites varchar2(20) not null,Cus_ID varchar2(20) not null)
+
+ALTER TABLE Hotel_Info ADD foreign key (Cus_Id) references Cus_Info(Cus_Id)
+
+desc Hotel_Info
 
 
-insert into Accommodation( ACC ID, IN DATE, OUT DATE, ROOM TYPE,
-ROOM NO, CUS ID, H ID) values(’23-43’,’21-JUL-23’, ’24-JUL-23’, ’SINGLE
-BED’,501,’10’,’63K9’)
-insert into Accommodation( ACC ID, IN DATE, OUT DATE, ROOM TYPE,
-ROOM NO, CUS ID, H ID) values(’23-62’,’13-MAY-23’, ’16-MAY-23’, ’DOUBLE BED’,509,’20’,’26R0’)
-insert into Accommodation( ACC ID, IN DATE, OUT DATE, ROOM TYPE,
-ROOM NO, CUS ID, H ID) values(’23-65’,’01-APR-23’, ’10-APR-23’, ’SINGLE
-BED’,203,’30’,’55SK’)
-SELECT * FROM Accommodation
 
 
-desc Food Booking
-insert into Food Booking( B ID, B DATE, MEAL TYPE, N O GUESTS,
-H ID) values(’1001’,’22-JUL-23’, ’LUNCH’, ’5’,’63K9’)
-insert into Food Booking( B ID, B DATE, MEAL TYPE, N O GUESTS,
-H ID) values(’2030’,’12-SEP-23’, ’DINNER’, ’3’,’26R0’)
-insert into Food Booking( B ID, B DATE, MEAL TYPE, N O GUESTS,
-H ID) values(’3002’,’03-NOV-23’, ’BREAKFAST’, ’6’,’55SK’)
-SELECT * FROM Food Booking
+CREATE TABLE Accommodation(ACC_ID varchar2(20) PRIMARY KEY,In_Date date  NOT NULL, Out_Date date  NOT NULL, Room_Type varchar2(20), Room_No number(7,0) UNIQUE, CUS_ID varchar2(20), H_ID varchar2(20));
 
-desc Hotel Ratings
-INSERT INTO Hotel Ratings(H ID, RATINGS) VALUES (’63K9’, multivalue type(’GOOD’, ’EXCELLENT’)); INSERT INTO Hotel Ratings(H IDRATINGS) VALUES (’55SK’, multivalue type(’VERY GOOD’, ’NOT BAD’));
-INSERT INTO Hotel Ratings(H ID, RATINGS) VALUES (’26R0’, multivalue type(’EXCELLENT’));
-SELECT H ID, COLUMN VALUE AS RATINGS FROM Hotel Ratings,
-TABLE(Hotel Ratings.RATINGS)
+ALTER TABLE Accommodation add constraint customer1 FOREIGN KEY (CUS_ID) references CUS_Info;
 
+ALTER TABLE Accommodation add constraint hotel FOREIGN KEY (H_ID) references Hotel_Info;
+
+DESC Accommodation;
+
+
+
+
+create table Food_Booking(B_ID Varchar2(20) primary key,B_Date varchar2(20) not null,Meal_Type varchar2(20) not null,N_o_Guests varchar2(20) not null,H_ID varchar2(20) not null)
+
+ALTER TABLE Food_Booking ADD foreign key (H_ID ) references Hotel_Info (H_ID )
+
+desc Food_Booking;
+
+
+
+
+CREATE TYPE multivalue_type AS TABLE OF VARCHAR2(15);
+CREATE TABLE Hotel_Ratings ( H_ID varchar2(20) PRIMARY KEY, Ratings multivalue_type) NESTED TABLE Ratings STORE AS Phone_Numbers_Table3;
+
+desc Hotel_Ratings
+
+
+create table Payment(Pay_ID varchar2(20) primary key,Amount number not null,Pay_Date date not null,Pay_Method varchar(20) not null,Invoice_Number Number not null,Cus_Id varchar2(20) not null)
+
+ALTER TABLE Payment ADD foreign key (Cus_Id) references Cus_Info(Cus_Id)
 
 desc Payment
-insert into Payment( PAY ID, AMOUNT, PAY DATE, PAY METHOD, INVOICE NUMBER, CUS ID) values(’507B’, 2000,’10-JAN-23’, ’BKASH’, 984,’10’)
-insert into Payment( PAY ID, AMOUNT, PAY DATE, PAY METHOD, INVOICE NUMBER, CUS ID) values(’465C’, 500,’11-JUL-23’, ’NAGAD’, 985,’10’)
-insert into Payment( PAY ID, AMOUNT, PAY DATE, PAY METHOD, INVOICE NUMBER, CUS ID) values(’203A’, 5000,’23-DEC-23’, ’CASH’, 986,’10’)
